@@ -190,11 +190,24 @@ Through this task, the following FPGA concepts were explored:
 
 ---
 
-# Doubts and Questions
+# Insights
 
-(Add future doubts, observations, debugging notes, and improvements here)
+## FPGA Output and LED ON/OFF Logic on DE10-Lite
 
----
+The DE10-Lite FPGA board uses an **active-low configuration** for its onboard LEDs (LEDR0–LEDR9). This means the LED state is opposite to the FPGA output signal.
+
+| FPGA Output | Voltage Level | LED State |
+|-------------|---------------|-----------|
+| 0 | 0V | LED ON |
+| 1 | 3.3V | LED OFF |
+
+The LED is connected between the **3.3V supply and the FPGA output pin** through a resistor (330 ohm). When the FPGA output is driven LOW (`0`), current flows through the LED to the FPGA pin, turning the LED ON. When the output is driven HIGH (`1`), there is no voltage difference across the LED, so it remains OFF.
+
+Therefore, in VHDL design:
+
+```vhdl
+LEDR(0) <= '0';   -- LED ON
+LEDR(0) <= '1';   -- LED OFF
 
 # References
 
