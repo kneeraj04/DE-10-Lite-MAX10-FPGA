@@ -14,9 +14,9 @@ This project introduces the fundamentals of:
 
 ---
 
-# 2. Development Steps
+## 2. Development Steps
 
-## Step 1: Create VHDL Design
+### Step 1: Create VHDL Design
 
 - Created a new Quartus Prime project.
 - Developed the VHDL source code (`LED_Test.vhd`) using Visual Studio Code.
@@ -25,7 +25,7 @@ This project introduces the fundamentals of:
 
 ---
 
-## Step 2: Assign FPGA Pins
+### Step 2: Assign FPGA Pins
 
 - Opened:
 
@@ -48,7 +48,7 @@ Assignments → Pin Planner
 
 ---
 
-## Step 3: Compile and Program FPGA
+### Step 3: Compile and Program FPGA
 
 - Compiled the project using Quartus Prime.
 - Generated the FPGA programming file:
@@ -69,15 +69,15 @@ USB-Blaster (JTAG)
 
 ---
 
-# 3. Code Explanation
+## 3. Code Explanation
 
-## What did we build?
+### What did we build?
 
 A hardware circuit that controls LEDR0 and generates a continuous blinking pattern with a fixed time delay.
 
 ---
 
-## How does it work?
+### How does it work?
 
 - The DE10-Lite provides a **50 MHz clock signal** to the FPGA.
 - The counter increments on every rising edge of the clock.
@@ -107,7 +107,7 @@ Repeat continuously
 
 ---
 
-# Importance of Clock in FPGA
+## Importance of Clock in FPGA
 
 Unlike a microcontroller, an FPGA does not execute instructions sequentially.
 
@@ -124,7 +124,7 @@ Without the clock, the counter cannot increment and the LED cannot blink.
 
 ---
 
-# 4. Understanding FPGA Output and LED Operation
+## 4. Understanding FPGA Output and LED Operation
 
 The DE10-Lite board uses an **active-low LED configuration**.
 
@@ -147,7 +147,7 @@ The LED is connected between **3.3 V and the FPGA output pin** through a current
 FPGA Pin
 ```
 
-### FPGA Output = 0 (LED ON)
+#### FPGA Output = 0 (LED ON)
 
 The FPGA pin provides a path to ground.
 
@@ -159,7 +159,7 @@ Current flows through the LED, causing it to turn ON.
 
 ---
 
-### FPGA Output = 1 (LED OFF)
+#### FPGA Output = 1 (LED OFF)
 
 The FPGA pin is at 3.3 V.
 
@@ -171,7 +171,7 @@ There is no voltage difference across the LED, so no current flows and the LED r
 
 ---
 
-## Key Learning
+### Key Learning
 
 The VHDL code controls the FPGA output signal, but the physical board connection determines how the LED behaves.
 
@@ -190,13 +190,13 @@ led <= not led_state;
 
 ---
 
-# 5. Doubts and Questions
+## 5. Doubts and Questions
 
 (Add future doubts, observations, and debugging notes here)
 
 ---
 
-# 6. References
+## 6. References
 
 - Terasic DE10-Lite User Manual
 - Intel Quartus Prime Lite 16.1 Documentation
