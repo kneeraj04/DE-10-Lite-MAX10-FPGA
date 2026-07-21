@@ -144,10 +144,19 @@ The VHDL signals were mapped to the physical DE10-Lite FPGA pins using Quartus P
 
 Configured signals:
 
-| Signal | Description |
-|--------|-------------|
-| `CLOCK_50` | 50 MHz onboard clock |
-| `LEDR[9:0]` | 10 onboard red LEDs |
+| Signal | FPGA Pin | Description |
+|--------|----------|-------------|
+| `CLOCK_50` | PIN_P11 | 50 MHz onboard clock |
+| `LEDR[0]` | PIN_A8 | LEDR0 |
+| `LEDR[1]` | PIN_A9 | LEDR1 |
+| `LEDR[2]` | PIN_A10 | LEDR2 |
+| `LEDR[3]` | PIN_B10 | LEDR3 |
+| `LEDR[4]` | PIN_D13 | LEDR4 |
+| `LEDR[5]` | PIN_C13 | LEDR5 |
+| `LEDR[6]` | PIN_E14 | LEDR6 |
+| `LEDR[7]` | PIN_D14 | LEDR7 |
+| `LEDR[8]` | PIN_A11 | LEDR8 |
+| `LEDR[9]` | PIN_B11 | LEDR9 |
 
 I/O Standard:
 
