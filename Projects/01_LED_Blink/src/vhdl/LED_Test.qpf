@@ -19,13 +19,13 @@
 #
 # Quartus Prime
 # Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-# Date created = 19:24:29  July 20, 2026
+# Date created = 09:39:12  July 21, 2026
 #
 # -------------------------------------------------------------------------- #
 
 QUARTUS_VERSION = "16.1"
-DATE = "19:24:29  July 20, 2026"
+DATE = "09:39:12  July 21, 2026"
 
 # Revisions
 
-PROJECT_REVISION = "LED_Blink"
+PROJECT_REVISION = "LED_Test"
