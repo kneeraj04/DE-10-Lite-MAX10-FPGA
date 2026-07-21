@@ -208,8 +208,16 @@ Therefore, in VHDL design:
 ```vhdl
 LEDR(0) <= '0';   -- LED ON
 LEDR(0) <= '1';   -- LED OFF
+```
+
+---
 
 # References
 
-- Terasic DE10-Lite User Manual
-- Intel Quartus Prime Lite 16.1 Documentation
+- **Terasic DE10-Lite User Manual**  
+  Terasic Technologies Inc.  
+  *DE10-Lite FPGA Board User Guide and Hardware Description*
+
+- **Intel Quartus Prime Documentation**  
+  Intel Corporation  
+  *Quartus Prime Design Software User Guide*
