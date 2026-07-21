@@ -1,25 +1,43 @@
-library IEEE;   //standard library for VHDL
+library IEEE;   --standard library for VHDL
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity LED_Test is
 
 port (
-    led : out std_logic  //EXTERN connect FPGA pin to LED
+	
+	 clk : in std_logic;   --50MHz Clock input
+    led : out std_logic  --EXTERN connect FPGA pin to LED
 );
 
 end LED_Test;
 
 architecture Behavioral of LED_Test is
 
+    signal counter : unsigned(27 downto 0) := (others => '0');
+    signal led_state : std_logic := '0';
+
 begin
 
-    process
+    process (clk)
+	 
     begin
-        led <= '1';
-        wait for 1000 ms;
-        led <= '0';
-        wait for 1000 ms;
+	 
+		  if rising_edge (clk) then
+		  
+			if counter = 149999999 then
+			
+				counter <= (others => '0');
+            led_state <= not led_state;
 
+          else
+
+                counter <= counter + 1;
+					 
+			 end if;
+			end if ;
     end process;
+	 
+	  led <= not led_state;
 
 end Behavioral;
