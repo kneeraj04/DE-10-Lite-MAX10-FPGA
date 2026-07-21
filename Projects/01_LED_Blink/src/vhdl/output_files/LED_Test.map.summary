@@ -1,13 +1,13 @@
-Analysis & Synthesis Status : Successful - Tue Jul 21 14:24:31 2026
+Analysis & Synthesis Status : Successful - Tue Jul 21 17:12:21 2026
 Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 Revision Name : LED_Test
-Top-level Entity Name : LED_Test
+Top-level Entity Name : LED_Test2
 Family : MAX 10
-Total logic elements : 48
-    Total combinational functions : 48
-    Dedicated logic registers : 29
-Total registers : 29
-Total pins : 2
+Total logic elements : 61
+    Total combinational functions : 61
+    Dedicated logic registers : 30
+Total registers : 30
+Total pins : 11
 Total virtual pins : 0
 Total memory bits : 0
 Embedded Multiplier 9-bit elements : 0

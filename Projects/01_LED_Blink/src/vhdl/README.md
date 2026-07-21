@@ -1,12 +1,22 @@
-# Project 01: LED Blink using VHDL on DE10-Lite FPGA
+# Project 01: LED Control and Sequential Logic using VHDL on DE10-Lite FPGA
 
-## 1. Objective
+This project focuses on implementing basic LED control applications using VHDL. It introduces the complete FPGA development workflow, including VHDL design creation, Quartus Prime compilation, FPGA pin assignment, and hardware programming.
 
-The objective of this project is to understand the complete FPGA development workflow by implementing a simple LED blinking application on the **Terasic DE10-Lite FPGA board** using **VHDL**.
+This project contains two tasks:
 
-This project introduces the fundamentals of:
+- **Task 1: LED Blink using VHDL (LED_Test)**
+- **Task 2: Running LED Sequence using VHDL (LED_Test2)**
 
-- FPGA design flow
+---
+
+# Task 1: LED Blink using VHDL (LED_Test)
+
+## Objective
+
+The objective of this task was to implement a simple LED blinking application on the DE10-Lite FPGA board using VHDL.
+
+This task introduces:
+- FPGA design workflow
 - VHDL hardware description
 - Quartus Prime compilation
 - FPGA pin assignment
@@ -14,90 +24,13 @@ This project introduces the fundamentals of:
 
 ---
 
-## 2. Development Steps
+## Implementation
 
-### Step 1: Create VHDL Design
+A hardware circuit was created to control **LEDR0** and generate a continuous blinking pattern with a fixed delay.
 
-- Created a new Quartus Prime project.
-- Developed the VHDL source code (`LED_Test.vhd`) using Visual Studio Code.
-- Added the VHDL file into the Quartus project.
-- Set `LED_Test` as the **Top-Level Entity**.
+The onboard **50 MHz clock** was used as the timing source. A counter was implemented to count clock cycles on every rising edge of the clock. After reaching the predefined count value, the LED output state was toggled.
 
----
-
-### Step 2: Assign FPGA Pins
-
-- Opened:
-
-```
-Assignments → Pin Planner
-```
-
-- Connected VHDL signals to the physical FPGA pins.
-
-| Signal | FPGA Pin | Description |
-|--------|----------|-------------|
-| `clk` | PIN_P11 | 50 MHz onboard clock |
-| `led` | PIN_A8 | LEDR0 |
-
-- Selected I/O Standard:
-
-```
-3.3-V LVTTL
-```
-
----
-
-### Step 3: Compile and Program FPGA
-
-- Compiled the project using Quartus Prime.
-- Generated the FPGA programming file:
-
-```
-LED_Test.sof
-```
-
-- Opened Quartus Programmer.
-- Selected:
-
-```
-USB-Blaster (JTAG)
-```
-
-- Loaded the `.sof` file and programmed the FPGA.
-- Verified LEDR0 blinking operation on the DE10-Lite board.
-
----
-
-## 3. Code Explanation
-
-### What did we build?
-
-A hardware circuit that controls LEDR0 and generates a continuous blinking pattern with a fixed time delay.
-
----
-
-### How does it work?
-
-- The DE10-Lite provides a **50 MHz clock signal** to the FPGA.
-- The counter increments on every rising edge of the clock.
-- The counter counts:
-
-```
-150,000,000 clock cycles
-```
-
-which corresponds approximately to:
-
-```
-3 seconds
-```
-
-- After reaching this value:
-  - The counter resets.
-  - The LED state toggles.
-
-The final LED behavior:
+LED behavior:
 
 ```
 LED ON  → 3 seconds
@@ -107,96 +40,163 @@ Repeat continuously
 
 ---
 
-## Importance of Clock in FPGA
+## FPGA Pin Assignment
 
-Unlike a microcontroller, an FPGA does not execute instructions sequentially.
+The VHDL signals were mapped to the physical FPGA pins using **Quartus Pin Planner**.
 
-Instead, VHDL describes hardware circuits that operate synchronously using clock signals.
+| Signal | FPGA Pin | Description |
+|--------|----------|-------------|
+| `clk` | PIN_P11 | 50 MHz onboard clock |
+| `led` | PIN_A8 | LEDR0 |
 
-The clock:
+I/O Standard:
 
-- Synchronizes sequential logic.
-- Determines when registers update.
-- Provides accurate timing.
-- Enables counters, timers, communication interfaces (UART, SPI, I²C), and state machines.
-
-Without the clock, the counter cannot increment and the LED cannot blink.
+```
+3.3-V LVTTL
+```
 
 ---
 
-## 4. Understanding FPGA Output and LED Operation
+## Key Learning
 
-The DE10-Lite board uses an **active-low LED configuration**.
+Through this task, the following FPGA concepts were explored:
 
-This means:
-
-| FPGA Output | Voltage | LED State |
-|-------------|---------|-----------|
-| `0` | 0 V | LED ON |
-| `1` | 3.3 V | LED OFF |
-
-The LED is connected between **3.3 V and the FPGA output pin** through a current-limiting resistor.
-
-```
-+3.3 V
-  |
-330 Ω Resistor
-  |
- LED
-  |
-FPGA Pin
-```
-
-#### FPGA Output = 0 (LED ON)
-
-The FPGA pin provides a path to ground.
-
-```
-3.3 V → Resistor → LED → FPGA Pin (0 V)
-```
-
-Current flows through the LED, causing it to turn ON.
+- FPGA development workflow
+- VHDL entity and architecture structure
+- Importance of clock signals in FPGA
+- Clock-driven sequential logic
+- Counter implementation
+- Register updates
+- FPGA output control
+- Active-low LED configuration
+- Quartus compilation and FPGA programming
 
 ---
 
-#### FPGA Output = 1 (LED OFF)
+# Task 2: Running LED Sequence using VHDL (LED_Test2)
 
-The FPGA pin is at 3.3 V.
+## Objective
+
+The objective of this task was to implement a running LED sequence on the DE10-Lite FPGA board using VHDL.
+
+The LED sequence follows:
 
 ```
-3.3 V → Resistor → LED → FPGA Pin (3.3 V)
+LEDR0 → LEDR1 → LEDR2 → ... → LEDR9 → Repeat
 ```
-
-There is no voltage difference across the LED, so no current flows and the LED remains OFF.
 
 ---
 
-### Key Learning
+## Implementation
 
-The VHDL code controls the FPGA output signal, but the physical board connection determines how the LED behaves.
+The design uses the onboard **50 MHz clock** and consists of three main logic blocks.
 
-For DE10-Lite:
+---
+
+## 1. Clock Divider
+
+A counter was implemented to divide the 50 MHz clock frequency and generate a visible delay between LED transitions.
+
+The counter increments on every clock cycle and creates a timing interval for updating the LED position.
+
+---
+
+## 2. LED Position Counter
+
+A register was created to store the active LED position.
+
+The sequence follows:
 
 ```
-FPGA Output 0 → LED ON
-FPGA Output 1 → LED OFF
+0 → 1 → 2 → 3 → ... → 9 → 0
 ```
 
-Therefore, the output signal is inverted in VHDL:
+Each value represents one LED.
+
+Example:
+
+```
+LED Position = 0 → LEDR0 ON
+LED Position = 1 → LEDR1 ON
+LED Position = 2 → LEDR2 ON
+```
+
+---
+
+## 3. LED Decoder
+
+A case-based decoder logic was implemented to convert the LED position value into the corresponding LED output.
+
+Example:
 
 ```vhdl
-led <= not led_state;
+when "0010" =>
+    LEDR(2) <= '1';
+```
+
+This activates LEDR2 when the LED position value is 2, while keeping all other LEDs OFF.
+
+---
+
+## FPGA Pin Assignment
+
+The VHDL signals were mapped to the physical DE10-Lite FPGA pins using Quartus Pin Planner.
+
+Configured signals:
+
+| Signal | Description |
+|--------|-------------|
+| `CLOCK_50` | 50 MHz onboard clock |
+| `LEDR[9:0]` | 10 onboard red LEDs |
+
+I/O Standard:
+
+```
+3.3-V LVTTL
 ```
 
 ---
 
-## 5. Doubts and Questions
+## VHDL Design Structure
 
-(Add future doubts, observations, and debugging notes here)
+The design consists of two main processes:
+
+### Clock Process
+
+- Detects the rising edge of `CLOCK_50`.
+- Increments the clock counter.
+- Generates the timing delay.
+- Updates the LED position.
+
+### Decoder Process
+
+- Reads the LED position value.
+- Activates the selected LED.
+- Keeps all other LEDs OFF.
 
 ---
 
-## 6. References
+## Key Learning
+
+Through this task, the following FPGA concepts were explored:
+
+- Clock-driven sequential processes
+- Counters and registers
+- Signal declaration and assignment
+- Case-based decoder logic
+- FPGA pin mapping
+- Hardware description using VHDL
+- Designing sequential digital hardware blocks
+
+---
+
+# Doubts and Questions
+
+(Add future doubts, observations, debugging notes, and improvements here)
+
+---
+
+# References
 
 - Terasic DE10-Lite User Manual
 - Intel Quartus Prime Lite 16.1 Documentation
