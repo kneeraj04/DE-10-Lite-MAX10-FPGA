@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Test_Project02
-Wed Jul 22 23:45:21 2026
+Wed Jul 22 23:57:23 2026
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -43,7 +43,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Wed Jul 22 23:45:21 2026       ;
+; Analysis & Synthesis Status        ; Successful - Wed Jul 22 23:57:23 2026       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; Test_Project02                              ;
 ; Top-level Entity Name              ; Date_Display                                ;
@@ -259,7 +259,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Wed Jul 22 23:45:09 2026
+    Info: Processing started: Wed Jul 22 23:56:59 2026
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Test_Project02 -c Test_Project02
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -322,9 +322,9 @@ Info (21057): Implemented 48 device resources after synthesis - the final resour
     Info (21058): Implemented 0 input pins
     Info (21059): Implemented 48 output pins
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 50 warnings
-    Info: Peak virtual memory: 4788 megabytes
-    Info: Processing ended: Wed Jul 22 23:45:21 2026
-    Info: Elapsed time: 00:00:12
-    Info: Total CPU time (on all processors): 00:00:25
+    Info: Peak virtual memory: 4790 megabytes
+    Info: Processing ended: Wed Jul 22 23:57:23 2026
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:48
 
 

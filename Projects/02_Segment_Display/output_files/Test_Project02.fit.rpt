@@ -1,5 +1,5 @@
 Fitter report for Test_Project02
-Wed Jul 22 23:45:29 2026
+Wed Jul 22 23:57:42 2026
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -61,7 +61,7 @@ agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Fitter Summary                                                                   ;
 +------------------------------------+---------------------------------------------+
-; Fitter Status                      ; Successful - Wed Jul 22 23:45:29 2026       ;
+; Fitter Status                      ; Successful - Wed Jul 22 23:57:42 2026       ;
 ; Quartus Prime Version              ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                      ; Test_Project02                              ;
 ; Top-level Entity Name              ; Date_Display                                ;
@@ -152,7 +152,7 @@ agreement for further details.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   0.3%      ;
+;     Processors 2-4         ;   0.2%      ;
 +----------------------------+-------------+
 
 
@@ -1313,9 +1313,9 @@ Warning (171167): Found invalid Fitter assignments. See the Ignored Assignments 
 Info (144001): Generated suppressed messages file C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/02_Segment_Display/output_files/Test_Project02.fit.smsg
 Info: Quartus Prime Fitter was successful. 0 errors, 6 warnings
     Info: Peak virtual memory: 5630 megabytes
-    Info: Processing ended: Wed Jul 22 23:45:29 2026
-    Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:09
+    Info: Processing ended: Wed Jul 22 23:57:43 2026
+    Info: Elapsed time: 00:00:19
+    Info: Total CPU time (on all processors): 00:00:16
 
 
 +----------------------------+
