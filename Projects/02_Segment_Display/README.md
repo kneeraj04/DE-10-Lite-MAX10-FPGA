@@ -27,7 +27,7 @@ Displays:
 
 ## VHDL Code Summary
 
-The design consists of a single VHDL entity named **BirthDate_Display** with six 8-bit output ports corresponding to the six 7-segment displays available on the DE10-Lite board.
+The design consists of a single VHDL entity named **Date_Display** with six 8-bit output ports corresponding to the six 7-segment displays available on the DE10-Lite board.
 
 A reusable VHDL function named **SevenSeg()** is implemented to convert a decimal digit (0–9) into its corresponding **active-low 7-segment pattern**.
 
@@ -92,15 +92,6 @@ After completing this project, the following FPGA and VHDL concepts were learned
 - Performing FPGA pin assignments using Quartus Prime Pin Planner
 - Understanding the relationship between FPGA logic and physical hardware pins
 - Compiling, programming, and verifying a VHDL design on the DE10-Lite FPGA board
-
----
-
-## Hardware Used
-
-- **FPGA Board:** Terasic DE10-Lite
-- **FPGA Device:** Intel MAX10 (10M50DAF484C7G)
-- **Development Software:** Quartus Prime Lite 16.1
-- **Hardware Description Language:** VHDL
 
 ---
 
