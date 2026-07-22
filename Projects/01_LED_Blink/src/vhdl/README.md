@@ -220,7 +220,8 @@ LEDR(0) <= '1';   -- LED OFF
 ```
 
 ---
-
+# Doubts
+1. What is object file.pof,.sof?
 # References
 
 - **Terasic DE10-Lite User Manual**  
