@@ -8,7 +8,7 @@ entity Mux is
     );
 end Mux;
 
-architecture Behavioral of MUX is
+architecture Behavioral of MUX4to1 is
 begin
 
     process(SW)
