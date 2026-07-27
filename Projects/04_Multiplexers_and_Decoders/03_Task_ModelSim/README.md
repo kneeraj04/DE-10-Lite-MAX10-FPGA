@@ -169,7 +169,7 @@ BA = 11
 Each input combination is applied for:
 
 ```
-10 ns
+0.1 ns
 ```
 
 The output response is observed in the ModelSim waveform window.
@@ -275,7 +275,7 @@ Add Wave
 Run simulation:
 
 ```
-run 50 ns
+run  600 ps
 ```
 
 The testbench applies all four input combinations.
@@ -289,9 +289,9 @@ The expected ModelSim waveform is:
 | Simulation Time | B | A | Y0 | Y1 | Y2 | Y3 |
 |----------------|---|---|----|----|----|----|
 | 0 ns | 0 | 0 | 1 | 0 | 0 | 0 |
-| 10 ns | 0 | 1 | 0 | 1 | 0 | 0 |
-| 20 ns | 1 | 0 | 0 | 0 | 1 | 0 |
-| 30 ns | 1 | 1 | 0 | 0 | 0 | 1 |
+| 0.1 ns | 0 | 1 | 0 | 1 | 0 | 0 |
+| 0.2 ns | 1 | 0 | 0 | 0 | 1 | 0 |
+| 0.3 ns | 1 | 1 | 0 | 0 | 0 | 1 |
 
 ---
 
