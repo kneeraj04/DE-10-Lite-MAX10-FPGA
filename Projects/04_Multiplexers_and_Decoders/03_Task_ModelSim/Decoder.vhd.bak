@@ -15,16 +15,12 @@ end Decoder;
 
 architecture Behavioral of Decoder is
 
-    signal sel : std_logic_vector(1 downto 0);
-
 begin
 
-    sel <= B & A;
-
-    process(sel)
+    process(A,B)
     begin
 
-        case sel is
+        case (B & A) is
 
             when "00" =>
                 Y0 <= '1';

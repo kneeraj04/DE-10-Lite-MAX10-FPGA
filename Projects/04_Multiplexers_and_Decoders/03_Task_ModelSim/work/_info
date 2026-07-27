@@ -1,0 +1,88 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/16.1
+Edecoder
+Z0 w1785136051
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z3 dC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim
+Z4 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/Decoder.vhd
+Z5 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/Decoder.vhd
+l0
+L4
+VNV1NnXNBY38lh>S1zQfP]0
+!s100 F;W7BX26_l5WTJFPgMadL1
+Z6 OV;C;10.5b;63
+32
+Z7 !s110 1785138622
+!i10b 1
+Z8 !s108 1785138622.000000
+Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/Decoder.vhd|
+Z10 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/Decoder.vhd|
+!i113 1
+Z11 o-work work -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+DEx4 work 7 decoder 0 22 NV1NnXNBY38lh>S1zQfP]0
+l20
+L16
+V>L?3anMj[69:6oenOjhI61
+!s100 Lc@:?zAQLZHb5D3`i02[32
+R6
+32
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+R12
+Etb_decoder
+Z13 w1785138503
+R1
+R2
+R3
+Z14 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/tb_Decoder.vhd
+Z15 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/tb_Decoder.vhd
+l0
+L5
+V1Z<]nC[PD=iJ0D^?JNPY=3
+!s100 mHASzmenZj[XNaJ_XkeUF2
+R6
+32
+R7
+!i10b 1
+R8
+Z16 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/tb_Decoder.vhd|
+Z17 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/04_Multiplexers_and_Decoders/03_Task_ModelSim/tb_Decoder.vhd|
+!i113 1
+R11
+R12
+Asimulation
+R1
+R2
+Z18 DEx4 work 10 tb_decoder 0 22 1Z<]nC[PD=iJ0D^?JNPY=3
+l35
+L9
+V]FO1>_jmB`VFko6Tel:kc3
+!s100 N<hHTl]HLiOmK?>o]Vfh83
+R6
+32
+R7
+!i10b 1
+R8
+R16
+R17
+!i113 1
+R11
+R12
