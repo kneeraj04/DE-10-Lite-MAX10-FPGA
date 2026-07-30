@@ -1,0 +1,43 @@
+|Binary_Counters
+CLK50 => led_index[0].CLK
+CLK50 => led_index[1].CLK
+CLK50 => led_index[2].CLK
+CLK50 => led_index[3].CLK
+CLK50 => div_counter[0].CLK
+CLK50 => div_counter[1].CLK
+CLK50 => div_counter[2].CLK
+CLK50 => div_counter[3].CLK
+CLK50 => div_counter[4].CLK
+CLK50 => div_counter[5].CLK
+CLK50 => div_counter[6].CLK
+CLK50 => div_counter[7].CLK
+CLK50 => div_counter[8].CLK
+CLK50 => div_counter[9].CLK
+CLK50 => div_counter[10].CLK
+CLK50 => div_counter[11].CLK
+CLK50 => div_counter[12].CLK
+CLK50 => div_counter[13].CLK
+CLK50 => div_counter[14].CLK
+CLK50 => div_counter[15].CLK
+CLK50 => div_counter[16].CLK
+CLK50 => div_counter[17].CLK
+CLK50 => div_counter[18].CLK
+CLK50 => div_counter[19].CLK
+CLK50 => div_counter[20].CLK
+CLK50 => div_counter[21].CLK
+CLK50 => div_counter[22].CLK
+CLK50 => div_counter[23].CLK
+CLK50 => div_counter[24].CLK
+CLK50 => div_counter[25].CLK
+LEDR[0] << Mux9.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[1] << Mux8.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[2] << Mux7.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[3] << Mux6.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[4] << Mux5.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[5] << Mux4.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[6] << Mux3.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[7] << Mux2.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[8] << Mux1.DB_MAX_OUTPUT_PORT_TYPE
+LEDR[9] << Mux0.DB_MAX_OUTPUT_PORT_TYPE
+
+
