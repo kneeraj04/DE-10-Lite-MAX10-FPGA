@@ -1,0 +1,46 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+
+entity Traffic_Timer_Top is
+Port(
+    CLOCK_50 : in STD_LOGIC;      -- 50 MHz FPGA clock
+    RESET   : in STD_LOGIC;       -- Reset
+    timer_done : out STD_LOGIC    -- FSM input
+);
+end Traffic_Timer_Top;
+
+
+architecture Behavioral of Traffic_Timer_Top is
+
+signal counter : integer := 0;   -- Counter variable
+
+begin
+
+
+process(CLOCK_50, RESET)
+
+begin
+
+if RESET='1' then
+    counter <= 0;
+    timer_done <= '0';            -- Clear timer
+
+elsif rising_edge(CLOCK_50) then
+
+    if counter = 25000000 then    -- 0.5 sec delay (50MHz clock)
+        counter <= 0;
+        timer_done <= '1';        -- Trigger FSM transition
+
+    else
+        counter <= counter + 1;
+        timer_done <= '0';        -- Normal counting
+    end if;
+
+end if;
+
+end process;
+
+
+end Behavioral;
