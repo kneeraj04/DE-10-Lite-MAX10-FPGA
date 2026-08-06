@@ -1,0 +1,86 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+
+entity PWM_LED is
+
+    Port (
+        clk      : in  STD_LOGIC;     -- 50 MHz clock
+        reset    : in  STD_LOGIC;     -- Reset button
+        led_pwm  : out STD_LOGIC      -- PWM output to LED
+    );
+
+end PWM_LED;
+
+
+architecture Behavioral of PWM_LED is
+
+
+    -- 10 bit PWM counter
+    signal pwm_counter : unsigned(9 downto 0) := (others => '0');
+
+
+begin
+
+
+    ------------------------------------------------
+    -- PWM Counter Generation
+    ------------------------------------------------
+
+    process(clk, reset)
+
+    begin
+
+        if reset = '1' then
+
+            pwm_counter <= (others => '0');
+
+
+        elsif rising_edge(clk) then
+
+
+            if pwm_counter = 1023 then
+
+                pwm_counter <= (others => '0');
+
+            else
+
+                pwm_counter <= pwm_counter + 1;
+
+            end if;
+
+
+        end if;
+
+    end process;
+
+
+
+    ------------------------------------------------
+    -- PWM Comparator
+    -- 50% Duty Cycle
+    ------------------------------------------------
+
+    process(pwm_counter)
+
+    begin
+
+
+        if pwm_counter < 512 then
+
+            led_pwm <= '1';     -- LED ON
+
+
+        else
+
+            led_pwm <= '0';     -- LED OFF
+
+
+        end if;
+
+
+    end process;
+
+
+end Behavioral;
