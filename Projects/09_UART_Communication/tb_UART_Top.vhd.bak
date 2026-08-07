@@ -1,0 +1,94 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+
+entity UART_Top is
+
+end UART_Top;
+
+
+
+architecture sim of UART_Top is
+
+
+signal clk : std_logic:='0';
+
+signal reset : std_logic:='1';
+
+
+signal data : std_logic_vector(7 downto 0);
+
+signal valid : std_logic;
+
+
+
+constant clk_period : time :=10 ns;
+
+
+
+begin
+
+
+
+clk <= not clk after clk_period/2;
+
+
+
+DUT: entity work.UART_Top
+
+
+port map(
+
+clk=>clk,
+
+reset=>reset,
+
+received_data=>data,
+
+received_valid=>valid
+
+);
+
+
+
+process
+
+begin
+
+
+
+wait for 100 ns;
+
+
+reset<='0';
+
+
+wait for 500 ns;
+
+
+if data="01010101" then
+
+
+report "UART LOOPBACK SUCCESS";
+
+
+else
+
+
+report "UART FAILED";
+
+
+end if;
+
+
+
+wait;
+
+
+
+end process;
+
+
+
+end sim;

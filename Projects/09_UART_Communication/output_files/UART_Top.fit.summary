@@ -1,0 +1,18 @@
+Fitter Status : Successful - Fri Aug 07 14:21:55 2026
+Quartus Prime Version : 16.1.0 Build 196 10/24/2016 SJ Lite Edition
+Revision Name : UART_Top
+Top-level Entity Name : UART_Top
+Family : MAX 10
+Device : 10M50DAF484C7G
+Timing Models : Final
+Total logic elements : 966 / 49,760 ( 2 % )
+    Total combinational functions : 743 / 49,760 ( 1 % )
+    Dedicated logic registers : 676 / 49,760 ( 1 % )
+Total registers : 676
+Total pins : 12 / 360 ( 3 % )
+Total virtual pins : 0
+Total memory bits : 524,288 / 1,677,312 ( 31 % )
+Embedded Multiplier 9-bit elements : 0 / 288 ( 0 % )
+Total PLLs : 0 / 4 ( 0 % )
+UFM blocks : 0 / 1 ( 0 % )
+ADC blocks : 0 / 2 ( 0 % )

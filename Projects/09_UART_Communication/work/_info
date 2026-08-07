@@ -1,0 +1,210 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/16.1
+Ebaud_generator
+Z0 w1786087115
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z4 dC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication
+Z5 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd
+Z6 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd
+l0
+L6
+VW3_L^DmcRdDRZ:l:BRCHZ0
+!s100 339`RiUA_ojK7QP^0Akce0
+Z7 OV;C;10.5b;63
+32
+Z8 !s110 1786097039
+!i10b 1
+Z9 !s108 1786097039.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd|
+Z11 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+R3
+DEx4 work 14 baud_generator 0 22 W3_L^DmcRdDRZ:l:BRCHZ0
+l24
+L15
+V6GXB@j@aTd:2GWidL_JL42
+!s100 Bbm8o:THW=ah4<?3?Lmdc0
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Euart_rx
+Z14 w1786096249
+R2
+R3
+R4
+Z15 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd
+Z16 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd
+l0
+L6
+VUlJo9;Z9Q1hBgm2_V=>Y70
+!s100 b_[dX6MMIB2FX1@8dYPU=1
+R7
+32
+R8
+!i10b 1
+R9
+Z17 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd|
+Z18 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R2
+R3
+Z19 DEx4 work 7 uart_rx 0 22 UlJo9;Z9Q1hBgm2_V=>Y70
+l48
+L25
+V:58nhWJ322AUf4^PfMi8^0
+!s100 c>HWSFE;Z_10=GZY=@S:@1
+R7
+32
+R8
+!i10b 1
+R9
+R17
+R18
+!i113 1
+R12
+R13
+Euart_tb
+Z20 w1786096941
+R2
+R3
+R4
+Z21 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd
+Z22 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd
+l0
+L6
+VdG3m0m^9S4C_0=K01zboW1
+!s100 3BeDk5VT6AkhYJmP_7L0C3
+R7
+32
+Z23 !s110 1786097040
+!i10b 1
+Z24 !s108 1786097040.000000
+Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd|
+Z26 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd|
+!i113 1
+R12
+R13
+Asim
+Z27 DEx4 work 8 uart_top 0 22 ^K??TmOLY^_`J[f:ZG1eS2
+R2
+R3
+Z28 DEx4 work 7 uart_tb 0 22 dG3m0m^9S4C_0=K01zboW1
+l30
+L12
+Z29 V?I]A=J2=[P66AMWKdVfEL0
+Z30 !s100 c2:S04agb`;:ee?7Q7J8o2
+R7
+32
+R23
+!i10b 1
+R24
+R25
+R26
+!i113 1
+R12
+R13
+Euart_top
+Z31 w1786096291
+R2
+R3
+R4
+Z32 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd
+Z33 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd
+l0
+L6
+V^K??TmOLY^_`J[f:ZG1eS2
+!s100 8Aa<HPPbAg_em:gz0cZCX1
+R7
+32
+R8
+!i10b 1
+R9
+Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd|
+Z35 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R19
+Z36 DEx4 work 7 uart_tx 0 22 zgh3YLbKeBC6>7d=[?`la2
+R2
+R3
+R27
+l34
+L25
+Ve[g[S8X`>NoKT;TZd:eJL2
+!s100 X_SeS7HQC2dLUWFRObMDQ1
+R7
+32
+R8
+!i10b 1
+R9
+R34
+R35
+!i113 1
+R12
+R13
+Euart_tx
+Z37 w1786096230
+R2
+R3
+R4
+Z38 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd
+Z39 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd
+l0
+L5
+Vzgh3YLbKeBC6>7d=[?`la2
+!s100 `?gz]^oQzMVKJVH<YoD]m1
+R7
+32
+R8
+!i10b 1
+R9
+Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd|
+Z41 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd|
+!i113 1
+R12
+R13
+Abehavioral
+R2
+R3
+R36
+l41
+L23
+VHGD9?7OhnbgM4FVg@BiXn0
+!s100 GE^GQ^Ae@;jQYWO6RPKiK3
+R7
+32
+R8
+!i10b 1
+R9
+R40
+R41
+!i113 1
+R12
+R13

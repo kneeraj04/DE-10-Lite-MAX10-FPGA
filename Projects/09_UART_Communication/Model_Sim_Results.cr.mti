@@ -1,0 +1,45 @@
+C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_TX.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity UART_TX
+-- Compiling architecture Behavioral of UART_TX
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/tb_UART_Top.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity UART_TB
+-- Compiling architecture sim of UART_TB
+-- Loading entity UART_Top
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_RX.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity UART_RX
+-- Compiling architecture Behavioral of UART_RX
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/baud_generator.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity baud_generator
+-- Compiling architecture Behavioral of baud_generator
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/09_UART_Communication/UART_Top.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity UART_Top
+-- Compiling architecture Behavioral of UART_Top
+-- Loading entity UART_TX
+-- Loading entity UART_RX
+
+} {} {}}

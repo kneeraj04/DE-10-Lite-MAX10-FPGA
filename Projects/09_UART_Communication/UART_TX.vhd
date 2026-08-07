@@ -1,13 +1,15 @@
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+
 
 
 entity UART_TX is
 
 Port(
 
-    clk        : in STD_LOGIC;
-    reset_n    : in STD_LOGIC;
+    clk       : in STD_LOGIC;
+    reset_n   : in STD_LOGIC;
 
     baud_tick : in STD_LOGIC;
 
@@ -15,11 +17,12 @@ Port(
     tx_data   : in STD_LOGIC_VECTOR(7 downto 0);
 
     tx        : out STD_LOGIC;
-    tx_busy   : out STD_LOGIC
+    busy      : out STD_LOGIC
 
 );
 
 end UART_TX;
+
 
 
 architecture Behavioral of UART_TX is
@@ -36,12 +39,14 @@ type state_type is
 
 signal state : state_type := IDLE;
 
+
 signal data_reg : STD_LOGIC_VECTOR(7 downto 0);
 
-signal bit_count : integer range 0 to 7 := 0;
+signal bit_count : integer range 0 to 7 :=0;
 
 
 begin
+
 
 
 process(clk, reset_n)
@@ -53,8 +58,11 @@ if reset_n='0' then
 
 
     state <= IDLE;
+
     tx <= '1';
-    tx_busy <= '0';
+
+    busy <= '0';
+
 
 
 elsif rising_edge(clk) then
@@ -64,30 +72,44 @@ elsif rising_edge(clk) then
     if baud_tick='1' then
 
 
+
         case state is
+
 
 
         when IDLE =>
 
+
             tx <= '1';
-            tx_busy <= '0';
+
+            busy <= '0';
+
 
 
             if tx_start='1' then
 
+
                 data_reg <= tx_data;
+
                 state <= START_BIT;
-                tx_busy <= '1';
+
+                busy <= '1';
+
 
             end if;
 
 
 
+
         when START_BIT =>
 
+
             tx <= '0';
-            state <= DATA_BITS;
+
             bit_count <= 0;
+
+            state <= DATA_BITS;
+
 
 
 
@@ -97,15 +119,19 @@ elsif rising_edge(clk) then
             tx <= data_reg(bit_count);
 
 
-            if bit_count = 7 then
+
+            if bit_count=7 then
 
                 state <= STOP_BIT;
 
+
             else
 
-                bit_count <= bit_count + 1;
+                bit_count <= bit_count+1;
+
 
             end if;
+
 
 
 
@@ -113,6 +139,7 @@ elsif rising_edge(clk) then
 
 
             tx <= '1';
+
             state <= IDLE;
 
 
@@ -120,13 +147,16 @@ elsif rising_edge(clk) then
         end case;
 
 
+
     end if;
+
 
 
 end if;
 
 
 end process;
+
 
 
 end Behavioral;

@@ -3,16 +3,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 
-entity Baud_Generator is
+entity baud_generator is
     Port(
         clk       : in  STD_LOGIC;
         reset_n   : in  STD_LOGIC;
         baud_tick : out STD_LOGIC
     );
-end Baud_Generator;
+end baud_generator;
 
 
-architecture Behavioral of Baud_Generator is
+architecture Behavioral of baud_generator is
 
     constant CLK_FREQ  : integer := 50000000;
     constant BAUD_RATE : integer := 9600;
