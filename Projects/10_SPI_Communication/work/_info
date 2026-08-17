@@ -1,0 +1,90 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA/16.1
+Espi_master
+Z0 w1786986904
+Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z4 dC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication
+Z5 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd
+Z6 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd
+l0
+L5
+VQlNSJmg=^5ND]i:n[EEHU1
+!s100 mOILL[ASN^aN2<oNSoEOA3
+Z7 OV;C;10.5b;63
+32
+Z8 !s110 1786987503
+!i10b 1
+Z9 !s108 1786987503.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd|
+Z11 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd|
+!i113 1
+Z12 o-work work -2002 -explicit
+Z13 tExplicit 1 CvgOpt 0
+Abehavioral
+R1
+R2
+R3
+DEx4 work 10 spi_master 0 22 QlNSJmg=^5ND]i:n[EEHU1
+l41
+L23
+Vm^e:M=o=T<EUGb[J7^2hN0
+!s100 LY?Y1ag_X<UQ`lUan[aDA1
+R7
+32
+R8
+!i10b 1
+R9
+R10
+R11
+!i113 1
+R12
+R13
+Espi_master_tb
+Z14 w1786987020
+R2
+R3
+R4
+Z15 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd
+Z16 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd
+l0
+L4
+V8IS94gaUd:OX26RBMQDh61
+!s100 Se=L>R[XGkTne8[OJ9PQm1
+R7
+32
+R8
+!i10b 1
+R9
+Z17 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd|
+Z18 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd|
+!i113 1
+R12
+R13
+Abehavior
+R2
+R3
+DEx4 work 13 spi_master_tb 0 22 8IS94gaUd:OX26RBMQDh61
+l42
+L7
+VFeeGVb?PL?VCKJ5DoJ]B70
+!s100 3U8W^5[X[78lmecNLf6g[2
+R7
+32
+R8
+!i10b 1
+R9
+R17
+R18
+!i113 1
+R12
+R13

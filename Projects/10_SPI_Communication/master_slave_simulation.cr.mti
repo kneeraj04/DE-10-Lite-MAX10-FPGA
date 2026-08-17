@@ -1,0 +1,18 @@
+C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package NUMERIC_STD
+-- Compiling entity spi_master
+-- Compiling architecture behavioral of spi_master
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/10_SPI_Communication/spi_master_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity spi_master_tb
+-- Compiling architecture behavior of spi_master_tb
+
+} {} {}}
