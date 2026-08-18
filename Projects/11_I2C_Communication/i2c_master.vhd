@@ -3,10 +3,11 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity i2c_master is
+
     generic (
-        CLK_FREQ : integer := 50000000;
-        I2C_FREQ : integer := 100000
+        CLK_DIV : integer := 2
     );
+
     port (
         clk        : in    std_logic;
         reset      : in    std_logic;
@@ -19,43 +20,31 @@ entity i2c_master is
         sda        : inout std_logic;
 
         busy       : out   std_logic;
-        done       : out   std_logic;
-        ack_error  : out   std_logic
+        done       : out   std_logic
     );
+
 end i2c_master;
 
 
-architecture rtl of i2c_master is
-
-    constant DIVIDER : integer := CLK_FREQ / (I2C_FREQ * 2);
+architecture behavioral of i2c_master is
 
     type state_type is (
         IDLE,
-        START_A,
-        START_B,
-        ADDR_LOW,
-        ADDR_HIGH,
-        ADDR_ACK_LOW,
-        ADDR_ACK_HIGH,
-        DATA_LOW,
-        DATA_HIGH,
-        DATA_ACK_LOW,
-        DATA_ACK_HIGH,
-        STOP_A,
-        STOP_B
+        START_BIT,
+        SEND_ADDRESS,
+        ADDRESS_ACK,
+        SEND_DATA,
+        DATA_ACK,
+        STOP_BIT,
+        FINISH
     );
 
     signal state : state_type := IDLE;
 
-    signal counter : integer range 0 to DIVIDER-1 := 0;
-    signal tick    : std_logic := '0';
+    signal clk_count : integer range 0 to CLK_DIV-1 := 0;
 
-    signal scl_reg : std_logic := '1';
-
-    -- Open-drain SDA
-    -- 1 = pull SDA LOW
-    -- 0 = release SDA
-    signal sda_low : std_logic := '0';
+    signal scl_int : std_logic := '1';
+    signal sda_int : std_logic := 'Z';
 
     signal address_reg : std_logic_vector(7 downto 0);
     signal data_reg    : std_logic_vector(7 downto 0);
@@ -65,267 +54,278 @@ architecture rtl of i2c_master is
 begin
 
     ----------------------------------------------------------------
-    -- SCL output
+    -- I2C outputs
     ----------------------------------------------------------------
-    scl <= scl_reg;
+
+    scl <= scl_int;
+
+    -- I2C open-drain behavior
+    --
+    -- '0' = drive LOW
+    -- 'Z' = release the line
+    --
+    sda <= sda_int;
 
 
     ----------------------------------------------------------------
-    -- SDA open-drain output
+    -- Status signals
     ----------------------------------------------------------------
-    sda <= '0' when sda_low = '1' else 'Z';
+
+    busy <= '1' when state /= IDLE else '0';
+
+    done <= '1' when state = FINISH else '0';
 
 
     ----------------------------------------------------------------
-    -- Clock divider
+    -- I2C Master State Machine
     ----------------------------------------------------------------
-    process(clk)
+
+    process(clk, reset)
+
     begin
-        if rising_edge(clk) then
 
-            if reset = '1' then
+        if reset = '1' then
 
-                counter <= 0;
-                tick <= '0';
+            state       <= IDLE;
 
-            else
+            clk_count   <= 0;
 
-                if counter = DIVIDER - 1 then
-                    counter <= 0;
-                    tick <= '1';
-                else
-                    counter <= counter + 1;
-                    tick <= '0';
-                end if;
+            scl_int     <= '1';
+            sda_int     <= 'Z';
 
-            end if;
-        end if;
-    end process;
+            address_reg <= (others => '0');
+            data_reg    <= (others => '0');
+
+            bit_count   <= 7;
 
 
-    ----------------------------------------------------------------
-    -- I2C MASTER FSM
-    ----------------------------------------------------------------
-    process(clk)
-    begin
-        if rising_edge(clk) then
+        elsif rising_edge(clk) then
 
-            if reset = '1' then
-
-                state <= IDLE;
-
-                scl_reg <= '1';
-                sda_low <= '0';
-
-                busy <= '0';
-                done <= '0';
-                ack_error <= '0';
-
-                bit_count <= 7;
-
-            else
-
-                done <= '0';
-
-                if tick = '1' then
-
-                    case state is
+            case state is
 
 
-                        ------------------------------------------------
-                        -- IDLE
-                        ------------------------------------------------
-                        when IDLE =>
+                ----------------------------------------------------
+                -- IDLE
+                ----------------------------------------------------
 
-                            scl_reg <= '1';
-                            sda_low <= '0';
+                when IDLE =>
 
-                            busy <= '0';
+                    scl_int <= '1';
+                    sda_int <= 'Z';
 
-                            if start = '1' then
+                    clk_count <= 0;
 
-                                address_reg <= slave_addr & '0';
-                                data_reg <= data_in;
+                    if start = '1' then
 
-                                bit_count <= 7;
+                        -- Combine 7-bit address + WRITE bit
+                        address_reg <= slave_addr & '0';
 
-                                busy <= '1';
-                                ack_error <= '0';
+                        data_reg <= data_in;
 
-                                state <= START_A;
+                        bit_count <= 7;
 
-                            end if;
+                        state <= START_BIT;
 
-
-                        ------------------------------------------------
-                        -- START CONDITION
-                        ------------------------------------------------
-                        when START_A =>
-
-                            -- Bus idle
-
-                            scl_reg <= '1';
-                            sda_low <= '0';
-
-                            state <= START_B;
+                    end if;
 
 
-                        when START_B =>
+                ----------------------------------------------------
+                -- START CONDITION
+                ----------------------------------------------------
 
-                            -- SDA HIGH -> LOW while SCL HIGH
+                when START_BIT =>
 
-                            scl_reg <= '1';
-                            sda_low <= '1';
+                    -- SCL HIGH
+                    scl_int <= '1';
 
-                            state <= ADDR_LOW;
+                    -- SDA HIGH -> LOW
+                    sda_int <= '0';
 
+                    clk_count <= 0;
 
-                        ------------------------------------------------
-                        -- ADDRESS BIT
-                        ------------------------------------------------
-                        when ADDR_LOW =>
-
-                            -- Change SDA while SCL LOW
-
-                            scl_reg <= '0';
-
-                            if address_reg(bit_count) = '0' then
-                                sda_low <= '1';
-                            else
-                                sda_low <= '0';
-                            end if;
-
-                            state <= ADDR_HIGH;
+                    state <= SEND_ADDRESS;
 
 
-                        when ADDR_HIGH =>
+                ----------------------------------------------------
+                -- SEND ADDRESS
+                ----------------------------------------------------
 
-                            -- Slave samples SDA here
+                when SEND_ADDRESS =>
 
-                            scl_reg <= '1';
+                    if clk_count = CLK_DIV-1 then
 
-                            state <= ADDR_ACK_LOW;
+                        clk_count <= 0;
 
-
-                        ------------------------------------------------
-                        -- ADDRESS ACK
-                        ------------------------------------------------
-                        when ADDR_ACK_LOW =>
-
-                            -- Release SDA
-
-                            scl_reg <= '0';
-                            sda_low <= '0';
-
-                            state <= ADDR_ACK_HIGH;
+                        scl_int <= not scl_int;
 
 
-                        when ADDR_ACK_HIGH =>
+                        -- When SCL becomes LOW,
+                        -- change SDA to the next bit.
+                        if scl_int = '0' then
 
-                            -- Slave should pull SDA LOW
+                            sda_int <= address_reg(bit_count);
 
-                            scl_reg <= '1';
+                        end if;
 
-                            if sda /= '0' then
-                                ack_error <= '1';
-                                state <= STOP_A;
 
-                            elsif bit_count = 0 then
+                        -- When SCL is HIGH, the bit is sampled.
+                        if scl_int = '1' then
 
-                                bit_count <= 7;
-                                state <= DATA_LOW;
+                            if bit_count = 0 then
+
+                                state <= ADDRESS_ACK;
 
                             else
 
                                 bit_count <= bit_count - 1;
-                                state <= ADDR_LOW;
 
                             end if;
 
+                        end if;
 
-                        ------------------------------------------------
-                        -- DATA BIT
-                        ------------------------------------------------
-                        when DATA_LOW =>
+                    else
 
-                            scl_reg <= '0';
+                        clk_count <= clk_count + 1;
 
-                            if data_reg(bit_count) = '0' then
-                                sda_low <= '1';
-                            else
-                                sda_low <= '0';
-                            end if;
-
-                            state <= DATA_HIGH;
+                    end if;
 
 
-                        when DATA_HIGH =>
+                ----------------------------------------------------
+                -- ADDRESS ACK
+                ----------------------------------------------------
 
-                            scl_reg <= '1';
+                when ADDRESS_ACK =>
 
-                            state <= DATA_ACK_LOW;
+                    if clk_count = CLK_DIV-1 then
 
+                        clk_count <= 0;
 
-                        ------------------------------------------------
-                        -- DATA ACK
-                        ------------------------------------------------
-                        when DATA_ACK_LOW =>
+                        scl_int <= not scl_int;
 
-                            scl_reg <= '0';
-                            sda_low <= '0';
-
-                            state <= DATA_ACK_HIGH;
+                        -- Release SDA.
+                        -- Slave can now generate ACK.
+                        sda_int <= 'Z';
 
 
-                        when DATA_ACK_HIGH =>
+                        if scl_int = '1' then
 
-                            scl_reg <= '1';
+                            bit_count <= 7;
 
-                            if sda /= '0' then
+                            state <= SEND_DATA;
 
-                                ack_error <= '1';
-                                state <= STOP_A;
+                        end if;
 
-                            elsif bit_count = 0 then
+                    else
 
-                                state <= STOP_A;
+                        clk_count <= clk_count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- SEND DATA
+                ----------------------------------------------------
+
+                when SEND_DATA =>
+
+                    if clk_count = CLK_DIV-1 then
+
+                        clk_count <= 0;
+
+                        scl_int <= not scl_int;
+
+
+                        -- Change SDA while SCL is LOW
+                        if scl_int = '0' then
+
+                            sda_int <= data_reg(bit_count);
+
+                        end if;
+
+
+                        -- Sample bit while SCL is HIGH
+                        if scl_int = '1' then
+
+                            if bit_count = 0 then
+
+                                state <= DATA_ACK;
 
                             else
 
                                 bit_count <= bit_count - 1;
-                                state <= DATA_LOW;
 
                             end if;
 
+                        end if;
 
-                        ------------------------------------------------
-                        -- STOP CONDITION
-                        ------------------------------------------------
-                        when STOP_A =>
+                    else
 
-                            scl_reg <= '0';
-                            sda_low <= '1';
+                        clk_count <= clk_count + 1;
 
-                            state <= STOP_B;
+                    end if;
 
 
-                        when STOP_B =>
+                ----------------------------------------------------
+                -- DATA ACK
+                ----------------------------------------------------
 
-                            -- SDA LOW -> HIGH while SCL HIGH
+                when DATA_ACK =>
 
-                            scl_reg <= '1';
-                            sda_low <= '0';
+                    if clk_count = CLK_DIV-1 then
 
-                            busy <= '0';
-                            done <= '1';
+                        clk_count <= 0;
 
-                            state <= IDLE;
+                        scl_int <= not scl_int;
 
-                    end case;
+                        -- Release SDA for slave ACK
+                        sda_int <= 'Z';
 
-                end if;
-            end if;
+
+                        if scl_int = '1' then
+
+                            state <= STOP_BIT;
+
+                        end if;
+
+                    else
+
+                        clk_count <= clk_count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- STOP CONDITION
+                ----------------------------------------------------
+
+                when STOP_BIT =>
+
+                    -- SCL HIGH
+                    scl_int <= '1';
+
+                    -- SDA LOW -> HIGH
+                    -- 'Z' allows the pull-up to make it HIGH.
+                    sda_int <= 'Z';
+
+                    state <= FINISH;
+
+
+                ----------------------------------------------------
+                -- FINISH
+                ----------------------------------------------------
+
+                when FINISH =>
+
+                    scl_int <= '1';
+                    sda_int <= 'Z';
+
+                    state <= IDLE;
+
+
+            end case;
+
         end if;
+
     end process;
 
-end rtl;
+end behavioral;
