@@ -1,1 +1,27 @@
+C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_salve.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_salve.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity i2c_slave
+-- Compiling architecture Behavioral of i2c_slave
 
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd {1 {vcom -work work -2002 -explicit -stats=none {C:\DE-10-Lite-MAX10-FPGA\DE-10-Lite-MAX10-FPGA\Projects\11_I2C_Communication\i2c_master.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity i2c_master
+-- Compiling architecture Behavioral of i2c_master
+
+} {} {}} C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none {C:\DE-10-Lite-MAX10-FPGA\DE-10-Lite-MAX10-FPGA\Projects\11_I2C_Communication\i2c_master_tb.vhd}
+Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Compiling entity i2c_master_tb
+-- Compiling architecture Behavioral of i2c_master_tb
+-- Loading entity i2c_master
+-- Loading entity i2c_slave
+
+} {} {}}
