@@ -102,9 +102,9 @@ VI9270a;F]RFV6hI;gmH`C2
 !s100 610<GW2:LB`Ii:51L>D3D0
 R6
 32
-Z24 !s110 1787072062
+Z24 !s110 1787072081
 !i10b 1
-Z25 !s108 1787072062.000000
+Z25 !s108 1787072081.000000
 Z26 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_salve.vhd|
 Z27 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_salve.vhd|
 !i113 1
@@ -116,8 +116,8 @@ R2
 R20
 l31
 L12
-VAzC6hAd35BNCJE[m<^_m40
-!s100 lzG<mAhZgAbe6b^K<6`ST2
+Z28 VAzC6hAd35BNCJE[m<^_m40
+Z29 !s100 lzG<mAhZgAbe6b^K<6`ST2
 R6
 32
 R24
