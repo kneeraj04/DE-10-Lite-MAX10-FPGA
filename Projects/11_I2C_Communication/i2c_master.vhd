@@ -1,6 +1,5 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;
 
 entity i2c_master is
     port (
@@ -22,30 +21,28 @@ end i2c_master;
 architecture Behavioral of i2c_master is
 
     ----------------------------------------------------------------
-    -- CLOCK SETTINGS
+    -- 50 MHz CLOCK
+    -- 100 kHz I2C CLOCK
     --
-    -- FPGA clock = 50 MHz
-    -- I2C clock  = 100 kHz
-    --
-    -- One SCL half-period = 5 us
-    -- 50 MHz x 5 us = 250 clock cycles
+    -- 5 us = 250 FPGA clock cycles
     ----------------------------------------------------------------
 
     constant CLK_DIV : integer := 250;
 
-    signal clk_count : integer range 0 to CLK_DIV - 1 := 0;
+    signal clk_count : integer range 0 to CLK_DIV-1 := 0;
     signal tick      : std_logic := '0';
 
 
     ----------------------------------------------------------------
-    -- STATE MACHINE
+    -- I2C STATES
     ----------------------------------------------------------------
 
     type state_type is (
+
         IDLE,
 
-        START_1,
-        START_2,
+        START_A,
+        START_B,
 
         ADDRESS_SETUP,
         ADDRESS_HIGH,
@@ -65,29 +62,32 @@ architecture Behavioral of i2c_master is
         DATA_ACK_SAMPLE,
         DATA_ACK_LOW,
 
-        STOP_1,
-        STOP_2,
-        STOP_3,
+        STOP_A,
+        STOP_B,
+        STOP_C,
 
         DONE_STATE
+
     );
 
     signal state : state_type := IDLE;
 
 
     ----------------------------------------------------------------
-    -- I2C ADDRESS AND DATA
+    -- ADDRESS AND DATA
     ----------------------------------------------------------------
 
-    -- 7-bit slave address = 1010000
-    -- Write bit = 0
-    -- Complete address byte = 10100000
+    -- 7-bit address = 1010000
+    -- Write bit    = 0
+    --
+    -- Complete address byte:
+    -- 10100000
 
     constant ADDRESS_BYTE : std_logic_vector(7 downto 0)
         := "10100000";
 
 
-    -- Data byte = 10101010
+    -- Data byte
 
     constant DATA_BYTE : std_logic_vector(7 downto 0)
         := "10101010";
@@ -100,33 +100,23 @@ architecture Behavioral of i2c_master is
     -- OPEN-DRAIN CONTROL
     ----------------------------------------------------------------
 
-    signal scl_drive_low : std_logic := '0';
-    signal sda_drive_low : std_logic := '0';
+    signal scl_low : std_logic := '0';
+    signal sda_low : std_logic := '0';
 
 
 begin
 
     ----------------------------------------------------------------
-    -- OPEN-DRAIN I2C OUTPUTS
-    --
-    -- '0' = drive line LOW
-    -- 'Z' = release line
-    --
-    -- External pull-up makes released line HIGH.
+    -- OPEN-DRAIN OUTPUTS
     ----------------------------------------------------------------
 
-    scl <= '0' when scl_drive_low = '1' else 'Z';
+    scl <= '0' when scl_low = '1' else 'Z';
 
-    sda <= '0' when sda_drive_low = '1' else 'Z';
+    sda <= '0' when sda_low = '1' else 'Z';
 
 
     ----------------------------------------------------------------
     -- CLOCK DIVIDER
-    --
-    -- 50 MHz FPGA clock
-    -- Generates one timing tick every 250 clock cycles.
-    --
-    -- 250 x 20 ns = 5 us
     ----------------------------------------------------------------
 
     process(clk, reset)
@@ -135,19 +125,19 @@ begin
         if reset = '1' then
 
             clk_count <= 0;
-            tick      <= '0';
+            tick <= '0';
 
         elsif rising_edge(clk) then
 
-            if clk_count = CLK_DIV - 1 then
+            if clk_count = CLK_DIV-1 then
 
                 clk_count <= 0;
-                tick      <= '1';
+                tick <= '1';
 
             else
 
                 clk_count <= clk_count + 1;
-                tick      <= '0';
+                tick <= '0';
 
             end if;
 
@@ -157,7 +147,7 @@ begin
 
 
     ----------------------------------------------------------------
-    -- I2C MASTER STATE MACHINE
+    -- MASTER STATE MACHINE
     ----------------------------------------------------------------
 
     process(clk, reset)
@@ -169,122 +159,123 @@ begin
 
             bit_count <= 7;
 
-            scl_drive_low <= '0';
-            sda_drive_low <= '0';
+            scl_low <= '0';
+            sda_low <= '0';
 
             busy <= '0';
             done <= '0';
 
             ack_address <= '0';
-            ack_data    <= '0';
+            ack_data <= '0';
 
 
         elsif rising_edge(clk) then
 
-            --------------------------------------------------------
-            -- DONE IS A ONE-CLOCK PULSE
-            --------------------------------------------------------
-
-            done <= '0';
-
-
-            --------------------------------------------------------
+            ----------------------------------------------------------------
             -- IDLE
-            --------------------------------------------------------
+            ----------------------------------------------------------------
 
             if state = IDLE then
 
-                scl_drive_low <= '0';
-                sda_drive_low <= '0';
+                scl_low <= '0';
+                sda_low <= '0';
 
                 busy <= '0';
-
-                ack_address <= '0';
-                ack_data    <= '0';
 
                 bit_count <= 7;
 
 
                 if start = '1' then
 
-                    busy  <= '1';
-                    state <= START_1;
+                    busy <= '1';
+
+                    done <= '0';
+
+                    ack_address <= '0';
+                    ack_data <= '0';
+
+                    state <= START_A;
 
                 end if;
 
 
-            --------------------------------------------------------
-            -- OTHER STATES ADVANCE ON I2C TIMING TICK
-            --------------------------------------------------------
+            ----------------------------------------------------------------
+            -- OTHER STATES
+            ----------------------------------------------------------------
 
             elsif tick = '1' then
 
                 case state is
 
-                    ------------------------------------------------
+
+                    --------------------------------------------------------
                     -- START CONDITION
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
-                    when START_1 =>
+                    when START_A =>
 
-                        -- SCL HIGH
+                        -- Bus initially:
+                        -- SCL = HIGH
+                        -- SDA = HIGH
+                        --
+                        -- Generate START:
                         -- SDA HIGH -> LOW
 
-                        scl_drive_low <= '0';
-                        sda_drive_low <= '1';
+                        scl_low <= '0';
+                        sda_low <= '1';
 
-                        state <= START_2;
+                        state <= START_B;
 
 
-                    when START_2 =>
+                    when START_B =>
 
                         -- Pull SCL LOW
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         bit_count <= 7;
 
                         state <= ADDRESS_SETUP;
 
 
-                    ------------------------------------------------
+                    --------------------------------------------------------
                     -- ADDRESS
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
                     when ADDRESS_SETUP =>
 
-                        -- Put address bit on SDA while SCL LOW
+                        -- Put address bit on SDA
 
                         if ADDRESS_BYTE(bit_count) = '0' then
 
-                            sda_drive_low <= '1';
+                            sda_low <= '1';
 
                         else
 
-                            sda_drive_low <= '0';
+                            sda_low <= '0';
 
                         end if;
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         state <= ADDRESS_HIGH;
 
 
                     when ADDRESS_HIGH =>
 
-                        -- Release SCL.
-                        -- Pull-up makes SCL HIGH.
+                        -- Release SCL
+                        -- Pull-up makes it HIGH
 
-                        scl_drive_low <= '0';
+                        scl_low <= '0';
 
                         state <= ADDRESS_LOW;
 
 
                     when ADDRESS_LOW =>
 
-                        -- Pull SCL LOW
+                        -- Finish clock by pulling SCL LOW
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         if bit_count = 0 then
 
@@ -299,19 +290,19 @@ begin
                         end if;
 
 
-                    ------------------------------------------------
+                    --------------------------------------------------------
                     -- ADDRESS ACK
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
                     when ADDRESS_ACK_SETUP =>
 
                         -- Master releases SDA
 
-                        sda_drive_low <= '0';
+                        sda_low <= '0';
 
-                        -- SCL remains LOW
+                        -- SCL LOW
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         state <= ADDRESS_ACK_HIGH;
 
@@ -320,16 +311,14 @@ begin
 
                         -- Release SCL
 
-                        scl_drive_low <= '0';
-
-                        -- Give slave time to establish ACK
+                        scl_low <= '0';
 
                         state <= ADDRESS_ACK_SAMPLE;
 
 
                     when ADDRESS_ACK_SAMPLE =>
 
-                        -- Sample SDA during ACK clock
+                        -- Slave should pull SDA LOW
 
                         if sda = '0' then
 
@@ -348,50 +337,48 @@ begin
 
                         -- Finish ACK clock
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         bit_count <= 7;
 
                         state <= DATA_SETUP;
 
 
-                    ------------------------------------------------
+                    --------------------------------------------------------
                     -- DATA
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
                     when DATA_SETUP =>
 
-                        -- Put data bit on SDA while SCL LOW
-
                         if DATA_BYTE(bit_count) = '0' then
 
-                            sda_drive_low <= '1';
+                            sda_low <= '1';
 
                         else
 
-                            sda_drive_low <= '0';
+                            sda_low <= '0';
 
                         end if;
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         state <= DATA_HIGH;
 
 
                     when DATA_HIGH =>
 
-                        -- Release SCL
+                        -- SCL HIGH
 
-                        scl_drive_low <= '0';
+                        scl_low <= '0';
 
                         state <= DATA_LOW;
 
 
                     when DATA_LOW =>
 
-                        -- Pull SCL LOW
+                        -- SCL LOW
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         if bit_count = 0 then
 
@@ -406,19 +393,17 @@ begin
                         end if;
 
 
-                    ------------------------------------------------
+                    --------------------------------------------------------
                     -- DATA ACK
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
                     when DATA_ACK_SETUP =>
 
                         -- Release SDA
 
-                        sda_drive_low <= '0';
+                        sda_low <= '0';
 
-                        -- Keep SCL LOW
-
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
                         state <= DATA_ACK_HIGH;
 
@@ -427,16 +412,12 @@ begin
 
                         -- Release SCL
 
-                        scl_drive_low <= '0';
-
-                        -- Give slave time to establish ACK
+                        scl_low <= '0';
 
                         state <= DATA_ACK_SAMPLE;
 
 
                     when DATA_ACK_SAMPLE =>
-
-                        -- Sample SDA
 
                         if sda = '0' then
 
@@ -455,68 +436,68 @@ begin
 
                         -- Finish ACK clock
 
-                        scl_drive_low <= '1';
+                        scl_low <= '1';
 
-                        state <= STOP_1;
-
-
-                    ------------------------------------------------
-                    -- STOP CONDITION
-                    ------------------------------------------------
-
-                    when STOP_1 =>
-
-                        -- Both SCL and SDA LOW
-
-                        scl_drive_low <= '1';
-                        sda_drive_low <= '1';
-
-                        state <= STOP_2;
+                        state <= STOP_A;
 
 
-                    when STOP_2 =>
+                    --------------------------------------------------------
+                    -- STOP
+                    --------------------------------------------------------
+
+                    when STOP_A =>
+
+                        -- Both LOW
+
+                        scl_low <= '1';
+                        sda_low <= '1';
+
+                        state <= STOP_B;
+
+
+                    when STOP_B =>
 
                         -- Release SCL
 
-                        scl_drive_low <= '0';
+                        scl_low <= '0';
 
                         -- Keep SDA LOW
 
-                        sda_drive_low <= '1';
+                        sda_low <= '1';
 
-                        state <= STOP_3;
+                        state <= STOP_C;
 
 
-                    when STOP_3 =>
+                    when STOP_C =>
 
-                        -- SCL is HIGH
-                        -- Release SDA
+                        -- SCL HIGH
+                        -- SDA LOW -> HIGH
                         --
-                        -- SDA LOW -> HIGH while SCL HIGH
-                        -- This is the STOP condition.
+                        -- STOP condition
 
-                        scl_drive_low <= '0';
-                        sda_drive_low <= '0';
+                        scl_low <= '0';
+                        sda_low <= '0';
 
                         state <= DONE_STATE;
 
 
-                    ------------------------------------------------
-                    -- TRANSACTION COMPLETE
-                    ------------------------------------------------
+                    --------------------------------------------------------
+                    -- DONE
+                    --------------------------------------------------------
 
                     when DONE_STATE =>
 
-                        busy <= '0';
+                        -- Keep DONE HIGH
 
+                        busy <= '0';
                         done <= '1';
 
-                        state <= IDLE;
+                        state <= DONE_STATE;
 
 
-                    ------------------------------------------------
+                    --------------------------------------------------------
                     -- SAFETY
-                    ------------------------------------------------
+                    --------------------------------------------------------
 
                     when others =>
 

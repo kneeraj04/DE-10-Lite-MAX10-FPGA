@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+
 entity i2c_master_tb is
 end i2c_master_tb;
 
@@ -8,7 +9,7 @@ end i2c_master_tb;
 architecture Behavioral of i2c_master_tb is
 
     ----------------------------------------------------------------
-    -- TESTBENCH SIGNALS
+    -- CLOCK / CONTROL
     ----------------------------------------------------------------
 
     signal clk   : std_logic := '0';
@@ -28,26 +29,16 @@ architecture Behavioral of i2c_master_tb is
     -- MASTER STATUS
     ----------------------------------------------------------------
 
-    signal busy        : std_logic;
-    signal done        : std_logic;
-    signal ack_address : std_logic;
-    signal ack_data    : std_logic;
+    signal busy         : std_logic;
+    signal done         : std_logic;
+    signal ack_address  : std_logic;
+    signal ack_data     : std_logic;
 
 
 begin
 
     ----------------------------------------------------------------
-    -- SIMULATED I2C PULL-UP RESISTORS
-    --
-    -- 'H' = weak HIGH
-    --
-    -- If master/slave drives LOW:
-    --
-    --     'H' + '0' = '0'
-    --
-    -- If both release:
-    --
-    --     'H' + 'H' = 'H'
+    -- SIMULATED PULL-UP RESISTORS
     ----------------------------------------------------------------
 
     scl <= 'H';
@@ -55,7 +46,7 @@ begin
 
 
     ----------------------------------------------------------------
-    -- I2C MASTER
+    -- MASTER
     ----------------------------------------------------------------
 
     master_inst : entity work.i2c_master
@@ -71,7 +62,6 @@ begin
 
             busy        => busy,
             done        => done,
-
             ack_address => ack_address,
             ack_data    => ack_data
 
@@ -79,7 +69,7 @@ begin
 
 
     ----------------------------------------------------------------
-    -- I2C SLAVE
+    -- SLAVE
     ----------------------------------------------------------------
 
     slave_inst : entity work.i2c_slave
@@ -93,12 +83,12 @@ begin
 
 
     ----------------------------------------------------------------
-    -- 50 MHz FPGA CLOCK
+    -- 50 MHz CLOCK
     --
-    -- Period = 20 ns
+    -- 20 ns period
     ----------------------------------------------------------------
 
-    clk_process : process
+    clock_process : process
     begin
 
         while true loop
@@ -140,7 +130,7 @@ begin
 
 
         ------------------------------------------------------------
-        -- START TRANSACTION
+        -- START
         ------------------------------------------------------------
 
         start <= '1';
@@ -151,25 +141,25 @@ begin
 
 
         ------------------------------------------------------------
-        -- WAIT FOR TRANSACTION TO FINISH
+        -- WAIT FOR DONE
         ------------------------------------------------------------
 
         wait until done = '1';
 
 
         ------------------------------------------------------------
-        -- WAIT A LITTLE BEFORE ENDING
+        -- KEEP SIMULATION RUNNING
         ------------------------------------------------------------
 
-        wait for 1 us;
+        wait for 10 us;
 
 
         ------------------------------------------------------------
-        -- END SIMULATION
+        -- END
         ------------------------------------------------------------
 
         assert false
-            report "I2C transaction completed successfully"
+            report "I2C transaction completed"
             severity failure;
 
     end process;
