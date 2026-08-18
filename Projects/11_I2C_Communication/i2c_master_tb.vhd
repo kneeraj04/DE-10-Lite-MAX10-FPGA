@@ -7,36 +7,31 @@ end i2c_master_tb;
 
 architecture Behavioral of i2c_master_tb is
 
-    -- Clock
-    signal clk : std_logic := '0';
-
-    -- Reset
+    signal clk   : std_logic := '0';
     signal reset : std_logic := '1';
-
-    -- Start command
     signal start : std_logic := '0';
 
-    -- I2C signals
     signal scl : std_logic;
     signal sda : std_logic;
 
-    -- Status
     signal busy : std_logic;
     signal done : std_logic;
+
+    signal ack_address : std_logic;
+    signal ack_data    : std_logic;
 
 begin
 
     ------------------------------------------------------------
-    -- DUT
+    -- MASTER
     ------------------------------------------------------------
 
-    uut : entity work.i2c_master
+    master_inst : entity work.i2c_master
 
         port map (
 
             clk   => clk,
             reset => reset,
-
             start => start,
 
             scl   => scl,
@@ -49,10 +44,27 @@ begin
 
 
     ------------------------------------------------------------
-    -- CLOCK GENERATION
+    -- SLAVE
+    ------------------------------------------------------------
+
+    slave_inst : entity work.i2c_slave
+
+        port map (
+
+            scl => scl,
+            sda => sda,
+
+            ack_address => ack_address,
+            ack_data    => ack_data
+
+        );
+
+
+    ------------------------------------------------------------
+    -- CLOCK
     --
-    -- Clock period = 20 ns
-    -- Frequency = 50 MHz
+    -- 50 MHz
+    -- Period = 20 ns
     ------------------------------------------------------------
 
     clk_process : process
@@ -89,13 +101,13 @@ begin
         reset <= '0';
 
         --------------------------------------------------------
-        -- Wait before starting
+        -- WAIT
         --------------------------------------------------------
 
         wait for 100 ns;
 
         --------------------------------------------------------
-        -- Start I2C transmission
+        -- START
         --------------------------------------------------------
 
         start <= '1';
@@ -105,7 +117,7 @@ begin
         start <= '0';
 
         --------------------------------------------------------
-        -- Wait until transmission finishes
+        -- WAIT FOR TRANSACTION
         --------------------------------------------------------
 
         wait until done = '1';
@@ -113,11 +125,11 @@ begin
         wait for 100 ns;
 
         --------------------------------------------------------
-        -- End simulation
+        -- END SIMULATION
         --------------------------------------------------------
 
         assert false
-            report "I2C simulation completed successfully"
+            report "I2C transaction completed"
             severity failure;
 
     end process;
