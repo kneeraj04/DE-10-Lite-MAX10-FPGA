@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/intelFPGA/16.1
 Ei2c_master
-Z0 w1787054213
+Z0 w1787055116
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ VJMO6nD07<<4bhM7@H?d=H0
 !s100 czE6?GE?BejY4AJOYzbQG0
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1787054530
+Z8 !s110 1787057344
 !i10b 1
-Z9 !s108 1787054530.000000
+Z9 !s108 1787057344.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
 Z11 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
 !i113 1
@@ -37,8 +37,8 @@ R3
 Z14 DEx4 work 10 i2c_master 0 22 JMO6nD07<<4bhM7@H?d=H0
 l54
 L29
-VU0HIXQ]8DU;IlAS[T^l1R3
-!s100 k=WjE<G2=>Z]fhGobmkOK2
+V>]80Z4Nf5hNFd[TL@e@3>2
+!s100 R5`X^6k37dVnk=RM3S0dD1
 R7
 32
 R8
@@ -70,16 +70,16 @@ R12
 R13
 w1787053373
 Ei2c_master_tb
-Z18 w1787054239
+Z18 w1787055137
 R2
 R3
 R4
 Z19 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
 Z20 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
 l0
-L4
-V=[DH038e=^TT[d=:hNPXo2
-!s100 [=A<ILKOPcaGDoFSS1L3o1
+L5
+VB;7S1Sek6Gd3j_bmbC_TG1
+!s100 <;[DoBF4BneTQ?M:ieJD>0
 R7
 32
 R8
@@ -95,11 +95,11 @@ R1
 R14
 R2
 R3
-DEx4 work 13 i2c_master_tb 0 22 =[DH038e=^TT[d=:hNPXo2
-l50
-L8
-VfQR^ZPMJXBb30:dO4PB2>2
-!s100 lb0HjnROSO66Tk=mS6i?62
+Z23 DEx4 work 13 i2c_master_tb 0 22 B;7S1Sek6Gd3j_bmbC_TG1
+l51
+L9
+Z24 V@K8C>UCMaOM4:O_]z>NYV1
+Z25 !s100 GHnIO@6J_jJD20`<<Tkn:2
 R7
 32
 R8
@@ -115,7 +115,7 @@ R1
 R15
 R2
 R3
-Z23 DEx4 work 13 i2c_master_tb 0 22 B;7S1Sek6Gd3j_bmbC_TG1
+R23
 l31
 L9
 V8f@oP7IZ7L^5`kUb>ke2H3
