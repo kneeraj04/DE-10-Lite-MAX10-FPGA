@@ -21,9 +21,9 @@ VH:85_>oWiV68n9>fiV]`Y1
 !s100 V?IG9Y`D5=T>lMNl3iazj1
 Z6 OV;C;10.5b;63
 32
-Z7 !s110 1787072145
+Z7 !s110 1787072636
 !i10b 1
-Z8 !s108 1787072145.000000
+Z8 !s108 1787072636.000000
 Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:\DE-10-Lite-MAX10-FPGA\DE-10-Lite-MAX10-FPGA\Projects\11_I2C_Communication\i2c_master.vhd|
 Z10 !s107 C:\DE-10-Lite-MAX10-FPGA\DE-10-Lite-MAX10-FPGA\Projects\11_I2C_Communication\i2c_master.vhd|
 !i113 1
@@ -89,7 +89,7 @@ R18
 R11
 R12
 Ei2c_slave
-Z20 w1787072045
+Z20 w1787072608
 R1
 R2
 R3
@@ -113,10 +113,10 @@ Abehavioral
 R1
 R2
 R19
-l31
+l57
 L12
-Z25 VAzC6hAd35BNCJE[m<^_m40
-Z26 !s100 lzG<mAhZgAbe6b^K<6`ST2
+Z25 VXTV6GPlhoj9U`1TSefMkL3
+Z26 !s100 mLYJQV7]gVM^kHehM;dzh0
 R6
 32
 R7

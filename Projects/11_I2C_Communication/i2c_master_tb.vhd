@@ -8,7 +8,7 @@ end i2c_master_tb;
 architecture Behavioral of i2c_master_tb is
 
     ----------------------------------------------------------------
-    -- CLOCK AND CONTROL
+    -- CONTROL
     ----------------------------------------------------------------
 
     signal clk   : std_logic := '0';
@@ -25,19 +25,17 @@ architecture Behavioral of i2c_master_tb is
 
 
     ----------------------------------------------------------------
-    -- MASTER STATUS
+    -- STATUS
     ----------------------------------------------------------------
 
-    signal busy        : std_logic;
-    signal done        : std_logic;
-    signal ack_address : std_logic;
-    signal ack_data    : std_logic;
+    signal busy : std_logic;
+    signal done : std_logic;
 
 
 begin
 
     ----------------------------------------------------------------
-    -- SIMULATED I2C PULL-UP RESISTORS
+    -- SIMULATED PULL-UP RESISTORS
     ----------------------------------------------------------------
 
     scl <= 'H';
@@ -52,17 +50,15 @@ begin
 
         port map (
 
-            clk         => clk,
-            reset       => reset,
-            start       => start,
+            clk   => clk,
+            reset => reset,
+            start => start,
 
-            scl         => scl,
-            sda         => sda,
+            scl   => scl,
+            sda   => sda,
 
-            busy        => busy,
-            done        => done,
-            ack_address => ack_address,
-            ack_data    => ack_data
+            busy  => busy,
+            done  => done
 
         );
 
@@ -122,14 +118,14 @@ begin
 
 
         ------------------------------------------------------------
-        -- WAIT AFTER RESET
+        -- WAIT
         ------------------------------------------------------------
 
         wait for 100 ns;
 
 
         ------------------------------------------------------------
-        -- START TRANSACTION
+        -- START
         ------------------------------------------------------------
 
         start <= '1';
@@ -140,7 +136,7 @@ begin
 
 
         ------------------------------------------------------------
-        -- WAIT FOR TRANSACTION TO FINISH
+        -- WAIT FOR DONE
         ------------------------------------------------------------
 
         wait until done = '1';
@@ -154,11 +150,11 @@ begin
 
 
         ------------------------------------------------------------
-        -- END SIMULATION
+        -- END
         ------------------------------------------------------------
 
         assert false
-            report "I2C transaction completed successfully"
+            report "I2C transaction completed"
             severity failure;
 
     end process;
