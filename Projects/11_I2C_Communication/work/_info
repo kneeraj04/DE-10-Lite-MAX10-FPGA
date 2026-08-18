@@ -9,85 +9,81 @@ z2
 cModel Technology
 dC:/intelFPGA/16.1
 Ei2c_master
-Z0 w1787066265
-Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
-Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-Z4 dC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication
-Z5 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd
-Z6 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd
+Z0 w1787067128
+Z1 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z2 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z3 dC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication
+Z4 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd
+Z5 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd
 l0
-L5
-VjMYRSIc?43@H9CMY<]JSD2
-!s100 nG]UHF37NafgF4e?aF;0c2
-Z7 OV;C;10.5b;63
+L4
+V>Jeb>VS8c;TL?J600Z2IY1
+!s100 Dgb@>H7P<3<2lTc_H@A9z3
+Z6 OV;C;10.5b;63
 32
-Z8 !s110 1787066661
+Z7 !s110 1787067184
 !i10b 1
-Z9 !s108 1787066661.000000
-Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
-Z11 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
+Z8 !s108 1787067184.000000
+Z9 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
+Z10 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
 !i113 1
-Z12 o-work work -2002 -explicit
-Z13 tExplicit 1 CvgOpt 0
+Z11 o-work work -2002 -explicit
+Z12 tExplicit 1 CvgOpt 0
 Abehavioral
 R1
 R2
-R3
-Z14 DEx4 work 10 i2c_master 0 22 jMYRSIc?43@H9CMY<]JSD2
-l81
-L30
-Z15 VnHlzbRVZGEjN9bF<g:lHz1
-Z16 !s100 fIeK3]lzea8l_3IG70V=F3
-R7
+Z13 DEx4 work 10 i2c_master 0 22 >Jeb>VS8c;TL?J600Z2IY1
+l48
+L20
+Z14 VIFU5[nQie0j7b6V5jkGee1
+Z15 !s100 >G8<JWMT6QonNzgLzLfP;0
+R6
 32
-R8
+R7
 !i10b 1
+R8
 R9
 R10
+!i113 1
 R11
-!i113 1
 R12
-R13
 Ei2c_master_tb
-Z17 w1787066320
+Z16 w1787067140
 R1
 R2
 R3
-R4
-Z18 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
-Z19 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
+Z17 8C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
+Z18 FC:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd
 l0
-L5
-V[3QK9HO3CIL@>DfEmne;i3
-!s100 8jQ2XC^RJO=oDD5zUIYCz3
-R7
+L4
+VeBkGZUbbNRNNm2j:=4HDF1
+!s100 ?_MM]0a>Zm8b8zAHJz@9m1
+R6
 32
-R8
+R7
 !i10b 1
-R9
-Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd|
-Z21 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd|
+R8
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd|
+Z20 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master_tb.vhd|
 !i113 1
+R11
 R12
-R13
 Abehavioral
-R14
+R13
 R1
 R2
-R3
-DEx4 work 13 i2c_master_tb 0 22 [3QK9HO3CIL@>DfEmne;i3
-l55
-L9
-VaoFBNUf=ZWC[N^]NzcCgj3
-!s100 RzRL?_TUcNlf7J>U1WDBG2
-R7
+DEx4 work 13 i2c_master_tb 0 22 eBkGZUbbNRNNm2j:=4HDF1
+l27
+L8
+V;h5d58Yn28YHcKP_XncZg2
+!s100 aagbV]1]ee0M^G:IWEXHV2
+R6
 32
-R8
+R7
 !i10b 1
-R9
+R8
+R19
 R20
-R21
 !i113 1
+R11
 R12
-R13
