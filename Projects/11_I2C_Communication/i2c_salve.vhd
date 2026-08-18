@@ -3,11 +3,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity i2c_slave is
     port (
-        scl : in    std_logic;
-        sda : inout std_logic;
-
-        ack_address : out std_logic;
-        ack_data    : out std_logic
+        scl : inout std_logic;
+        sda : inout std_logic
     );
 end i2c_slave;
 
@@ -27,20 +24,26 @@ architecture Behavioral of i2c_slave is
 
     signal byte_count : integer range 0 to 2 := 0;
 
-    signal sda_drive : std_logic := '0';
-    signal sda_enable : std_logic := '0';
+    signal ack_drive : std_logic := '0';
 
 begin
 
     ------------------------------------------------------------
-    -- SDA open-drain behavior
+    -- Slave never drives SCL in this simple example
     ------------------------------------------------------------
 
-    sda <= '0' when sda_enable = '1' else 'Z';
+    scl <= 'Z';
 
 
     ------------------------------------------------------------
-    -- Receive address and data
+    -- Open-drain SDA
+    ------------------------------------------------------------
+
+    sda <= '0' when ack_drive = '1' else 'Z';
+
+
+    ------------------------------------------------------------
+    -- Receive data
     ------------------------------------------------------------
 
     process(scl)
@@ -49,7 +52,7 @@ begin
         if rising_edge(scl) then
 
             ----------------------------------------------------
-            -- First byte = ADDRESS + WRITE
+            -- ADDRESS BYTE
             ----------------------------------------------------
 
             if byte_count = 0 then
@@ -69,7 +72,7 @@ begin
 
 
             ----------------------------------------------------
-            -- Second byte = DATA
+            -- DATA BYTE
             ----------------------------------------------------
 
             elsif byte_count = 1 then
@@ -95,7 +98,7 @@ begin
 
 
     ------------------------------------------------------------
-    -- Generate ACK after address
+    -- ACK generation
     ------------------------------------------------------------
 
     process(scl)
@@ -104,36 +107,30 @@ begin
         if falling_edge(scl) then
 
             ----------------------------------------------------
-            -- Address received
+            -- ACK ADDRESS
             ----------------------------------------------------
 
             if byte_count = 1 then
 
-                if address_byte(7 downto 1) = SLAVE_ADDRESS then
+                if address_byte(7 downto 1)
+                    = SLAVE_ADDRESS then
 
-                    -- ACK
-                    sda_enable <= '1';
-
-                    ack_address <= '1';
+                    ack_drive <= '1';
 
                 end if;
 
 
             ----------------------------------------------------
-            -- Data received
+            -- ACK DATA
             ----------------------------------------------------
 
             elsif byte_count = 2 then
 
-                -- ACK data
-
-                sda_enable <= '1';
-
-                ack_data <= '1';
+                ack_drive <= '1';
 
             else
 
-                sda_enable <= '0';
+                ack_drive <= '0';
 
             end if;
 

@@ -11,16 +11,30 @@ architecture Behavioral of i2c_master_tb is
     signal reset : std_logic := '1';
     signal start : std_logic := '0';
 
-    signal scl : std_logic;
-    signal sda : std_logic;
+    ------------------------------------------------------------
+    -- I2C BUS
+    ------------------------------------------------------------
+
+    signal scl : std_logic := 'H';
+    signal sda : std_logic := 'H';
 
     signal busy : std_logic;
     signal done : std_logic;
-
-    signal ack_address : std_logic;
-    signal ack_data    : std_logic;
+    signal ack  : std_logic;
 
 begin
+
+    ------------------------------------------------------------
+    -- PULL-UP RESISTORS
+    --
+    -- Real I2C uses external pull-up resistors.
+    --
+    -- 'H' represents a weak HIGH.
+    ------------------------------------------------------------
+
+    scl <= 'H';
+    sda <= 'H';
+
 
     ------------------------------------------------------------
     -- MASTER
@@ -38,7 +52,8 @@ begin
             sda   => sda,
 
             busy  => busy,
-            done  => done
+            done  => done,
+            ack   => ack
 
         );
 
@@ -52,19 +67,13 @@ begin
         port map (
 
             scl => scl,
-            sda => sda,
-
-            ack_address => ack_address,
-            ack_data    => ack_data
+            sda => sda
 
         );
 
 
     ------------------------------------------------------------
-    -- CLOCK
-    --
-    -- 50 MHz
-    -- Period = 20 ns
+    -- 50 MHz CLOCK
     ------------------------------------------------------------
 
     clk_process : process
@@ -84,7 +93,7 @@ begin
 
 
     ------------------------------------------------------------
-    -- TEST SEQUENCE
+    -- TEST
     ------------------------------------------------------------
 
     stimulus_process : process
@@ -100,14 +109,16 @@ begin
 
         reset <= '0';
 
+
         --------------------------------------------------------
         -- WAIT
         --------------------------------------------------------
 
         wait for 100 ns;
 
+
         --------------------------------------------------------
-        -- START
+        -- START I2C
         --------------------------------------------------------
 
         start <= '1';
@@ -116,20 +127,22 @@ begin
 
         start <= '0';
 
+
         --------------------------------------------------------
-        -- WAIT FOR TRANSACTION
+        -- WAIT FOR COMPLETE TRANSACTION
         --------------------------------------------------------
 
         wait until done = '1';
 
         wait for 100 ns;
 
+
         --------------------------------------------------------
-        -- END SIMULATION
+        -- END
         --------------------------------------------------------
 
         assert false
-            report "I2C transaction completed"
+            report "I2C transaction completed successfully"
             severity failure;
 
     end process;
