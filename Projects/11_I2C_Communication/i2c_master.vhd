@@ -1,9 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
 
 entity i2c_master is
-
     generic (
         CLK_DIV : integer := 2
     );
@@ -22,7 +20,6 @@ entity i2c_master is
         busy       : out   std_logic;
         done       : out   std_logic
     );
-
 end i2c_master;
 
 
@@ -31,34 +28,45 @@ architecture behavioral of i2c_master is
     type state_type is (
         IDLE,
         START_BIT,
-        SEND_ADDRESS,
-        ADDRESS_ACK,
-        SEND_DATA,
-        DATA_ACK,
-        STOP_BIT,
+
+        ADDR_LOW,
+        ADDR_HIGH,
+
+        ADDR_ACK_LOW,
+        ADDR_ACK_HIGH,
+
+        DATA_LOW,
+        DATA_HIGH,
+
+        DATA_ACK_LOW,
+        DATA_ACK_HIGH,
+
+        STOP_LOW,
+        STOP_HIGH,
+
         FINISH
     );
 
     signal state : state_type := IDLE;
 
-    signal clk_count : integer range 0 to CLK_DIV-1 := 0;
+    signal count : integer range 0 to CLK_DIV-1 := 0;
 
-    signal scl_int : std_logic := '1';
-    signal sda_int : std_logic := 'Z';
+    signal scl_reg : std_logic := '1';
+    signal sda_reg : std_logic := 'Z';
 
     signal address_reg : std_logic_vector(7 downto 0);
     signal data_reg    : std_logic_vector(7 downto 0);
 
-    signal bit_count : integer range 0 to 7 := 7;
+    signal bit_index : integer range 0 to 7 := 7;
 
 begin
 
-    scl <= scl_int;
+    scl <= scl_reg;
 
-    -- I2C open-drain SDA
+    -- Open-drain SDA
     -- 0 = pull LOW
-    -- Z = release line
-    sda <= sda_int;
+    -- Z = release
+    sda <= sda_reg;
 
     busy <= '1' when state /= IDLE else '0';
 
@@ -73,15 +81,15 @@ begin
 
             state       <= IDLE;
 
-            clk_count   <= 0;
+            count       <= 0;
 
-            scl_int     <= '1';
-            sda_int     <= 'Z';
+            scl_reg     <= '1';
+            sda_reg     <= 'Z';
 
             address_reg <= (others => '0');
             data_reg    <= (others => '0');
 
-            bit_count   <= 7;
+            bit_index   <= 7;
 
 
         elsif rising_edge(clk) then
@@ -95,16 +103,17 @@ begin
 
                 when IDLE =>
 
-                    scl_int   <= '1';
-                    sda_int   <= 'Z';
-                    clk_count <= 0;
+                    scl_reg <= '1';
+                    sda_reg <= 'Z';
+
+                    count <= 0;
 
                     if start = '1' then
 
                         address_reg <= slave_addr & '0';
                         data_reg    <= data_in;
 
-                        bit_count <= 7;
+                        bit_index <= 7;
 
                         state <= START_BIT;
 
@@ -117,187 +126,240 @@ begin
 
                 when START_BIT =>
 
-                    -- SCL HIGH
-                    scl_int <= '1';
+                    scl_reg <= '1';
+                    sda_reg <= '0';
 
-                    -- SDA HIGH -> LOW
-                    sda_int <= '0';
+                    count <= 0;
 
-                    clk_count <= 0;
-
-                    state <= SEND_ADDRESS;
+                    state <= ADDR_LOW;
 
 
                 ----------------------------------------------------
-                -- SEND ADDRESS
+                -- ADDRESS LOW
                 ----------------------------------------------------
 
-                when SEND_ADDRESS =>
+                when ADDR_LOW =>
 
-                    if clk_count = CLK_DIV-1 then
+                    scl_reg <= '0';
 
-                        clk_count <= 0;
+                    sda_reg <= address_reg(bit_index);
 
-                        if scl_int = '1' then
+                    if count = CLK_DIV-1 then
 
-                            -- Falling edge
-                            scl_int <= '0';
+                        count <= 0;
 
-                        else
-
-                            -- Rising edge
-                            scl_int <= '1';
-
-                            if bit_count = 0 then
-
-                                state <= ADDRESS_ACK;
-
-                            else
-
-                                bit_count <= bit_count - 1;
-
-                            end if;
-
-                        end if;
-
+                        state <= ADDR_HIGH;
 
                     else
 
-                        clk_count <= clk_count + 1;
-
-                    end if;
-
-
-                    -- Change SDA only while SCL is LOW
-                    if scl_int = '0' then
-
-                        sda_int <= address_reg(bit_count);
+                        count <= count + 1;
 
                     end if;
 
 
                 ----------------------------------------------------
-                -- ADDRESS ACK
+                -- ADDRESS HIGH
                 ----------------------------------------------------
 
-                when ADDRESS_ACK =>
+                when ADDR_HIGH =>
 
-                    -- Release SDA
-                    sda_int <= 'Z';
+                    scl_reg <= '1';
 
-                    if clk_count = CLK_DIV-1 then
+                    if count = CLK_DIV-1 then
 
-                        clk_count <= 0;
+                        count <= 0;
 
-                        if scl_int = '0' then
+                        if bit_index = 0 then
 
-                            scl_int <= '1';
+                            state <= ADDR_ACK_LOW;
 
                         else
 
-                            scl_int <= '0';
+                            bit_index <= bit_index - 1;
 
-                            bit_count <= 7;
-
-                            state <= SEND_DATA;
+                            state <= ADDR_LOW;
 
                         end if;
 
                     else
 
-                        clk_count <= clk_count + 1;
+                        count <= count + 1;
 
                     end if;
 
 
                 ----------------------------------------------------
-                -- SEND DATA
+                -- ADDRESS ACK LOW
                 ----------------------------------------------------
 
-                when SEND_DATA =>
+                when ADDR_ACK_LOW =>
 
-                    if clk_count = CLK_DIV-1 then
+                    scl_reg <= '0';
 
-                        clk_count <= 0;
+                    sda_reg <= 'Z';
 
-                        if scl_int = '1' then
+                    if count = CLK_DIV-1 then
 
-                            scl_int <= '0';
+                        count <= 0;
+
+                        state <= ADDR_ACK_HIGH;
+
+                    else
+
+                        count <= count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- ADDRESS ACK HIGH
+                ----------------------------------------------------
+
+                when ADDR_ACK_HIGH =>
+
+                    scl_reg <= '1';
+
+                    sda_reg <= 'Z';
+
+                    if count = CLK_DIV-1 then
+
+                        count <= 0;
+
+                        bit_index <= 7;
+
+                        state <= DATA_LOW;
+
+                    else
+
+                        count <= count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- DATA LOW
+                ----------------------------------------------------
+
+                when DATA_LOW =>
+
+                    scl_reg <= '0';
+
+                    sda_reg <= data_reg(bit_index);
+
+                    if count = CLK_DIV-1 then
+
+                        count <= 0;
+
+                        state <= DATA_HIGH;
+
+                    else
+
+                        count <= count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- DATA HIGH
+                ----------------------------------------------------
+
+                when DATA_HIGH =>
+
+                    scl_reg <= '1';
+
+                    if count = CLK_DIV-1 then
+
+                        count <= 0;
+
+                        if bit_index = 0 then
+
+                            state <= DATA_ACK_LOW;
 
                         else
 
-                            scl_int <= '1';
+                            bit_index <= bit_index - 1;
 
-                            if bit_count = 0 then
-
-                                state <= DATA_ACK;
-
-                            else
-
-                                bit_count <= bit_count - 1;
-
-                            end if;
+                            state <= DATA_LOW;
 
                         end if;
 
                     else
 
-                        clk_count <= clk_count + 1;
-
-                    end if;
-
-
-                    -- Change SDA only while SCL is LOW
-                    if scl_int = '0' then
-
-                        sda_int <= data_reg(bit_count);
+                        count <= count + 1;
 
                     end if;
 
 
                 ----------------------------------------------------
-                -- DATA ACK
+                -- DATA ACK LOW
                 ----------------------------------------------------
 
-                when DATA_ACK =>
+                when DATA_ACK_LOW =>
 
-                    -- Release SDA
-                    sda_int <= 'Z';
+                    scl_reg <= '0';
 
-                    if clk_count = CLK_DIV-1 then
+                    sda_reg <= 'Z';
 
-                        clk_count <= 0;
+                    if count = CLK_DIV-1 then
 
-                        if scl_int = '0' then
+                        count <= 0;
 
-                            scl_int <= '1';
-
-                        else
-
-                            scl_int <= '0';
-
-                            state <= STOP_BIT;
-
-                        end if;
+                        state <= DATA_ACK_HIGH;
 
                     else
 
-                        clk_count <= clk_count + 1;
+                        count <= count + 1;
 
                     end if;
 
 
                 ----------------------------------------------------
-                -- STOP
+                -- DATA ACK HIGH
                 ----------------------------------------------------
 
-                when STOP_BIT =>
+                when DATA_ACK_HIGH =>
 
-                    -- SCL HIGH
-                    scl_int <= '1';
+                    scl_reg <= '1';
 
-                    -- Release SDA
-                    sda_int <= 'Z';
+                    sda_reg <= 'Z';
+
+                    if count = CLK_DIV-1 then
+
+                        count <= 0;
+
+                        state <= STOP_LOW;
+
+                    else
+
+                        count <= count + 1;
+
+                    end if;
+
+
+                ----------------------------------------------------
+                -- STOP LOW
+                ----------------------------------------------------
+
+                when STOP_LOW =>
+
+                    scl_reg <= '0';
+
+                    sda_reg <= '0';
+
+                    count <= 0;
+
+                    state <= STOP_HIGH;
+
+
+                ----------------------------------------------------
+                -- STOP HIGH
+                ----------------------------------------------------
+
+                when STOP_HIGH =>
+
+                    scl_reg <= '1';
+
+                    sda_reg <= 'Z';
 
                     state <= FINISH;
 
@@ -308,8 +370,8 @@ begin
 
                 when FINISH =>
 
-                    scl_int <= '1';
-                    sda_int <= 'Z';
+                    scl_reg <= '1';
+                    sda_reg <= 'Z';
 
                     state <= IDLE;
 

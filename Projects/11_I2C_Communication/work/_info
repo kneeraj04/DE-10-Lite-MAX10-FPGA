@@ -22,9 +22,9 @@ VJMO6nD07<<4bhM7@H?d=H0
 !s100 czE6?GE?BejY4AJOYzbQG0
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1787057344
+Z8 !s110 1787058377
 !i10b 1
-Z9 !s108 1787057344.000000
+Z9 !s108 1787058377.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
 Z11 !s107 C:/DE-10-Lite-MAX10-FPGA/DE-10-Lite-MAX10-FPGA/Projects/11_I2C_Communication/i2c_master.vhd|
 !i113 1
@@ -70,7 +70,7 @@ R12
 R13
 w1787053373
 Ei2c_master_tb
-Z18 w1787055137
+Z18 w1787058351
 R2
 R3
 R4
@@ -98,8 +98,8 @@ R3
 Z23 DEx4 work 13 i2c_master_tb 0 22 B;7S1Sek6Gd3j_bmbC_TG1
 l51
 L9
-Z24 V@K8C>UCMaOM4:O_]z>NYV1
-Z25 !s100 GHnIO@6J_jJD20`<<Tkn:2
+VCVl6V3XD4o8]<ahhA_G7N1
+!s100 M^GA9cReKFAG=n99mHEWD3
 R7
 32
 R8
